@@ -95,7 +95,7 @@ int main(int argc, char *argv[])
         Info<< "Time = " << runTime.timeName() << nl << endl;
 
         // --- ASM rates
-        #include "asmRates.H"
+        #include "pamRates.H"
 
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
@@ -158,6 +158,5 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
 
 // ************************************************************************* //

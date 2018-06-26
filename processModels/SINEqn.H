@@ -1,15 +1,17 @@
-// Scalar transport equation for nitrate and nitrite nitrogen
+// Scalar transport equation for inorganic nitrogen
 
-fvScalarMatrix SNOEqn
+fvScalarMatrix SINEqn
 (
-    fvm::ddt(alphaLiquid, SNO)
-    + fvm::div(liquidPhase.alphaPhi(), SNO)
-    - fvm::laplacian(alphaLiquid*DSNO, SNO)
+    fvm::ddt(alphaLiquid, SIN)
+    + fvm::div(liquidPhase.alphaPhi(), SIN)
+    - fvm::laplacian(alphaLiquid*SIN, SIN)
     ==
-    - alphaLiquid*(1-YH)/2.86/YH*rhoHeterotrophAnoxicGrowth
-    + alphaLiquid*rhoAutotrophAerobicGrowth/YA
-    - fvm::Sp(dissipationCoeff, SNO)
+    + alphaLiquid*fINXS * rhoHydrolysis
+    - alphaLiquid*fNB*YPBPH*rhoAcetateUptake
+    - alphaLiquid*fNB*YPBPH*rhoPhotoheterotrophicUptake
+    + alphaLiquid*fINDEC*rhoDecay
+    - fvm::Sp(dissipationCoeff, SIN)
 );
 
-SNOEqn.relax();
-SNOEqn.solve();
+SINEqn.relax();
+SINEqn.solve();

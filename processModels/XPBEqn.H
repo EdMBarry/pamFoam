@@ -1,15 +1,16 @@
-// Scalar transport equation for active autotrophic biomass
+// Scalar transport equation for photoheterotrophic biomass
 
-fvScalarMatrix XBAEqn
+fvScalarMatrix XPBEqn
 (
-    fvm::ddt(alphaLiquid, XBA)
-    + fvm::div(liquidPhase.alphaPhi(), XBA)
-    - fvm::laplacian(alphaLiquid*DXBA, XBA)
+    fvm::ddt(alphaLiquid, XPB)
+    + fvm::div(liquidPhase.alphaPhi(), XPB)
+    - fvm::laplacian(alphaLiquid*DXPB, XPB)
     ==
-      alphaLiquid*rhoAutotrophAerobicGrowth
-    - alphaLiquid*rhoAutotrophDecay
-    - fvm::Sp(dissipationCoeff, XBA)
+     alphaLiquid*YPBPH*rhoAcetateUptake
+     alphaLiquid*YPBPH*rhoPhotoheterotrophicUptake
+    - alphaLiquid*rhoDecay
+    - fvm::Sp(dissipationCoeff, XPB)
 );
 
-XBAEqn.relax();
-XBAEqn.solve();
+XPBEqn.relax();
+XPBEqn.solve();

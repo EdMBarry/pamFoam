@@ -1,15 +1,14 @@
 // Scalar transport equation for particulate products arising from biomass decay
 
-fvScalarMatrix XPEqn
+fvScalarMatrix XIEqn
 (
-    fvm::ddt(alphaLiquid, XP)
-    + fvm::div(liquidPhase.alphaPhi(), XP)
-    - fvm::laplacian(alphaLiquid*DXP, XP)
+    fvm::ddt(alphaLiquid, XI)
+    + fvm::div(liquidPhase.alphaPhi(), XI)
+    - fvm::laplacian(alphaLiquid*XI, XI)
     ==
-      alphaLiquid*fP*rhoHeterotrophDecay
-    + alphaLiquid*fP*rhoAutotrophDecay
-    - fvm::Sp(dissipationCoeff, XP)
+      alphaLiquid*fXIXS*rhoHydrolysis
+    - fvm::Sp(dissipationCoeff, XI)
 );
 
-XPEqn.relax();
-XPEqn.solve();
+XIEqn.relax();
+XIEqn.solve();

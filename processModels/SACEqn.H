@@ -2,14 +2,14 @@
 
 fvScalarMatrix SACEqn
 (
-    fvm::ddt(alphaLiquid, SAC
+    fvm::ddt(alphaLiquid, SAC)
     + fvm::div(liquidPhase.alphaPhi(), SAC)
-    - fvm::laplacian(alphaLiquid*DSND, SAC)
+    - fvm::laplacian(alphaLiquid*DSAC, SAC)
     ==
-    - alphaLiquid*rhoAmmonification
-    + alphaLiquid*rhoOrganicNitrogenHydrolysis
-    - fvm::Sp(dissipationCoeff, SND)
+    + alphaLiquid*fSACXS*rhoHydrolysis
+    - alphaLiquid*rhoAcetateUptake
+    - fvm::Sp(dissipationCoeff, SAC)
 );
 
-SNDEqn.relax();
-SNDEqn.solve();
+SACEqn.relax();
+SACEqn.solve();

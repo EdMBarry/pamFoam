@@ -1,16 +1,17 @@
-// Scalar transport equation for oxygen
+// Scalar transport equation for inorganic phosphorus
 
-fvScalarMatrix SOEqn
+fvScalarMatrix SIPEqn
 (
-    fvm::ddt(alphaLiquid, SO)
-    + fvm::div(liquidPhase.alphaPhi(), SO)
-    - fvm::laplacian(alphaLiquid*DSO, SO)
+    fvm::ddt(alphaLiquid, SIP)
+    + fvm::div(liquidPhase.alphaPhi(), SIP)
+    - fvm::laplacian(alphaLiquid*SIP, SIP)
     ==
-    - alphaLiquid*(1-YH)/YH*rhoHeterotrophAerobicGrowth
-    - alphaLiquid*(4.57-YA)/YA*rhoAutotrophAerobicGrowth
-    + alphaLiquid*oxygenTransfer->kLa()*(SOsat - SO)
-    - fvm::Sp(dissipationCoeff, SO)
+    alphaLiquid * fIPXS * rhoHydrolysis
+    - alphaLiquid * fPB * YPBPH * rhoAcetateUptake
+    - alphaLiquid * fPB * YPBPH * rhoPhotoheterotrophicUptake
+    + alphaLiquid * fIPDEC * rhoDecay
+    - fvm::Sp(dissipationCoeff, SIP)
 );
 
-SOEqn.relax();
-SOEqn.solve();
+SIPEqn.relax();
+SIPEqn.solve();

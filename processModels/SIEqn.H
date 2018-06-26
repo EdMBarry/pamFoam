@@ -1,17 +1,14 @@
-// Scalar transport equation for ammonia and ammonium nitrogen
+// Scalar transport equation for inert solubles
 
-fvScalarMatrix SNHEqn
+fvScalarMatrix SIEqn
 (
-    fvm::ddt(alphaLiquid, SNH)
-    + fvm::div(liquidPhase.alphaPhi(), SNH)
-    - fvm::laplacian(alphaLiquid*DSNH, SNH)
+    fvm::ddt(alphaLiquid, SI)
+    + fvm::div(liquidPhase.alphaPhi(), SI)
+    - fvm::laplacian(alphaLiquid*SI, SI)
     ==
-    - alphaLiquid*iXB*rhoHeterotrophAerobicGrowth
-    - alphaLiquid*iXB*rhoHeterotrophAnoxicGrowth
-    - alphaLiquid*(iXB+1/YA)*rhoAutotrophAerobicGrowth
-    + alphaLiquid*rhoAmmonification
+    + alphaLiquid*fSIXS*rhoHydrolysis
     - fvm::Sp(dissipationCoeff, SNH)
 );
 
-SNHEqn.relax();
-SNHEqn.solve();
+SIEqn.relax();
+SIEqn.solve();
