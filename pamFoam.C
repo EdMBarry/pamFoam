@@ -22,10 +22,14 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Application
-    asmFoam
+    pamFoam
 
 Description
-    Solver for an activated sludge system based on ASM1 biokinetics.
+    This is the generic solver for the photoanaerobic model extended to
+    CFD. This model includes the resolution of the radiative transfer equation,
+    as well as the process biokinetics and multiphase flows. Functionality
+    exists to neglect any of the aforementioned modules. An additional biofilm
+    model is currently in development and will be included as a modular add-on.
 
 \*---------------------------------------------------------------------------*/
 
