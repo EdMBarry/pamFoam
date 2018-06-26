@@ -1,10 +1,10 @@
-// Scalar transport equation for slowly biodegradable organic nitrogen
+// Scalar transport equation for acetate
 
-fvScalarMatrix SNDEqn
+fvScalarMatrix SACEqn
 (
-    fvm::ddt(alphaLiquid, SND)
-    + fvm::div(liquidPhase.alphaPhi(), SND)
-    - fvm::laplacian(alphaLiquid*DSND, SND)
+    fvm::ddt(alphaLiquid, SAC
+    + fvm::div(liquidPhase.alphaPhi(), SAC)
+    - fvm::laplacian(alphaLiquid*DSND, SAC)
     ==
     - alphaLiquid*rhoAmmonification
     + alphaLiquid*rhoOrganicNitrogenHydrolysis
