@@ -150,4 +150,276 @@ volScalarField XND
     mesh
 );
 
+Info << "Creating scalar fields for process rates" << endl;
+
+volScalarField rhoHeterotrophAerobicGrowth
+(
+    IOobject
+    (
+        "rhoHeterotrophAerobicGrowth",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoHeterotrophAerobicGrowth", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoHeterotrophAnoxicGrowth
+(
+    IOobject
+    (
+        "rhoHeterotrophAnoxicGrowth",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoHeterotrophAnoxicGrowth", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoAutotrophAerobicGrowth
+(
+    IOobject
+    (
+        "rhoAutotrophAerobicGrowth",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoAutotrophAerobicGrowth", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoHeterotrophDecay
+(
+    IOobject
+    (
+        "rhoHeterotrophDecay",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoHeterotrophDecay", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoAutotrophDecay
+(
+    IOobject
+    (
+        "rhoAutotrophDecay",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoAutotrophDecay", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoAmmonification
+(
+    IOobject
+    (
+        "rhoAmmonification",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoAmmonification", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoOrganicHydrolysis
+(
+    IOobject
+    (
+        "rhoOrganicHydrolysis",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoOrganicHydrolysis", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoOrganicNitrogenHydrolysis
+(
+    IOobject
+    (
+        "rhoOrganicNitrogenHydrolysis",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoOrganicNitrogenHydrolysis", dimMass/dimVolume/dimTime, 0)
+);
+
+Info << "Creating scalar fields for species diffusivities" << endl;
+
+volScalarField DSND
+(
+    IOobject
+    (
+        "DSND",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSNDValue
+);
+
+volScalarField DSNH
+(
+    IOobject
+    (
+        "DSNH",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSNHValue
+);
+
+volScalarField DSNO
+(
+    IOobject
+    (
+        "DSNO",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSNOValue
+);
+
+volScalarField DSO
+(
+    IOobject
+    (
+        "DSO",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSOValue
+);
+
+volScalarField DSS
+(
+    IOobject
+    (
+        "DSS",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSSValue
+);
+
+volScalarField DXBA
+(
+    IOobject
+    (
+        "DXBA",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DXBAValue
+);
+
+volScalarField DXBH
+(
+    IOobject
+    (
+        "DXBH",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DXBHValue
+);
+
+volScalarField DXND
+(
+    IOobject
+    (
+        "DXND",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DXNDValue
+);
+
+volScalarField DXP
+(
+    IOobject
+    (
+        "DXP",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DXPValue
+);
+
+volScalarField DXS
+(
+    IOobject
+    (
+        "DXS",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DXSValue
+);
+
+Info << "Creating scalar field for dissipation function" << endl;
+
+volScalarField dissipationCoeff
+(
+    IOobject
+    (
+        "dissipationCoeff",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("dissipationCoeff", dimless/dimTime, 0)
+);
+
 Info << endl;

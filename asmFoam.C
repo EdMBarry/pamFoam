@@ -39,6 +39,7 @@ Description
 #include "pimpleControl.H"
 #include "IOMRFZoneList.H"
 #include "CorrectPhi.H"
+#include "oxygenTransferModel.H"
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -51,8 +52,8 @@ int main(int argc, char *argv[])
     #include "createMesh.H"
     #include "createControl.H"
     #include "createFields.H"
-    #include "createAsmFields.H"
     #include "readBiokineticsProperties.H"
+    #include "createAsmFields.H"
     #include "initContinuityErrs.H"
     #include "createTimeControls.H"
     #include "correctPhi.H"
@@ -71,7 +72,8 @@ int main(int argc, char *argv[])
         fluid.lookupOrDefault<scalar>("maxSlamVelocity", GREAT)
     );
 
-    #include "liquidPhase.H"
+    #include "fluidPhases.H"
+    #include "createOxygenTransferModel.H"
 
     turbulence->validate();
 
@@ -87,6 +89,9 @@ int main(int argc, char *argv[])
 
         runTime++;
         Info<< "Time = " << runTime.timeName() << nl << endl;
+
+        // --- ASM rates
+        #include "asmRates.H"
 
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
@@ -106,49 +111,37 @@ int main(int argc, char *argv[])
             }
 
             #include "DDtU.H"
+
+            // --- Limit liquid phase velocities in gas phase
+            liquidPhase.U() *= 1 - pos(alphaGas - 0.99);
+
+            // --- Calculate dissipation coefficient for pure gas regions
+            dissipationCoeff = pos(alphaGas - 0.99)/runTime.deltaT();
+
+            // --- Update scalar diffusivities
+            DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.5));
+            DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.5));
+            DXBH = (turbulence->nut()/ScT + DXBHValue)*(1 - pos(alphaGas - 0.5));
+            DXBA = (turbulence->nut()/ScT + DXBAValue)*(1 - pos(alphaGas - 0.5));
+            DXP  = (turbulence->nut()/ScT + DXPValue) *(1 - pos(alphaGas - 0.5));
+            DSO  = (turbulence->nut()/ScT + DSOValue) *(1 - pos(alphaGas - 0.5));
+            DSNO = (turbulence->nut()/ScT + DSNOValue)*(1 - pos(alphaGas - 0.5));
+            DSNH = (turbulence->nut()/ScT + DSNHValue)*(1 - pos(alphaGas - 0.5));
+            DSND = (turbulence->nut()/ScT + DSNDValue)*(1 - pos(alphaGas - 0.5));
+            DXND = (turbulence->nut()/ScT + DXNDValue)*(1 - pos(alphaGas - 0.5));
+
+            // --- Solve ASM scalar equations
+            #include "SSEqn.H"
+            #include "XSEqn.H"
+            #include "XBHEqn.H"
+            #include "XBAEqn.H"
+            #include "XPEqn.H"
+            #include "SOEqn.H"
+            #include "SNOEqn.H"
+            #include "SNHEqn.H"
+            #include "SNDEqn.H"
+            #include "XNDEqn.H"
         }
-
-        #include "asmRates.H"
-
-        #include "SSEqn.H"
-        SSEqn.relax();
-        SSEqn.solve();
-
-        #include "XSEqn.H"
-        XSEqn.relax();
-        XSEqn.solve();
-
-        #include "XBHEqn.H"
-        XBHEqn.relax();
-        XBHEqn.solve();
-
-        #include "XBAEqn.H"
-        XBAEqn.relax();
-        XBAEqn.solve();
-
-        #include "XPEqn.H"
-        XPEqn.relax();
-        XPEqn.solve();
-
-        #include "SOEqn.H"
-        SOEqn.relax();
-        SOEqn.solve();
-
-        #include "SNOEqn.H"
-        SNOEqn.relax();
-        SNOEqn.solve();
-
-        #include "SNHEqn.H"
-        SNHEqn.relax();
-        SNHEqn.solve();
-
-        #include "SNDEqn.H"
-        SNDEqn.relax();
-        SNDEqn.solve();
-
-        #include "XNDEqn.H"
-        XNDEqn.relax();
-        XNDEqn.solve();
 
         runTime.write();
 
