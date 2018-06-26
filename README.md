@@ -1,6 +1,8 @@
-# asmFoam - A multiphase CFD solver with coupled activated sludge biokinetics
+# pamFoam - A multiphase, multiphysics CFD solver with coupled radiative transfer and biokinetics
 
-`asmFoam` is a multiphase CFD solver that is coupled with an activated sludge model, based on the ASM1 model of Henze et al. (1987). There are currently two oxygen transfer models available, based on: (i) constant, spatially uniform values of `kL` (mass transfer coefficient) and `a` (interfacial area), expressedd as the product, kLa  (ii) dynamically calculated values of `kL`, based on Higbie's penetration theory, and `a`, based on local bubble size and gas volume fraction.
+`pamFoam` is a multiphase CFD solver which has coupled physical processes of the biochemical continuous reactor described by H&uuml;lsen
+
+that is coupled with an activated sludge model, based on the ASM1 model of Henze et al. (1987). There are currently two oxygen transfer models available, based on: (i) constant, spatially uniform values of `kL` (mass transfer coefficient) and `a` (interfacial area), expressedd as the product, kLa  (ii) dynamically calculated values of `kL`, based on Higbie's penetration theory, and `a`, based on local bubble size and gas volume fraction.
 
 The model is implemented using the [OpenFOAM](https://openfoam.org) libaries for discretization and solution of the governing equations.
 
