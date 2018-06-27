@@ -33,6 +33,7 @@ Description
 
 \*---------------------------------------------------------------------------*/
 
+#include "photoBioModel.H"
 #include "fvCFD.H"
 #include "multiphaseSystem.H"
 #include "phaseModel.H"
@@ -43,7 +44,8 @@ Description
 #include "pimpleControl.H"
 #include "IOMRFZoneList.H"
 #include "CorrectPhi.H"
-#include "oxygenTransferModel.H"
+//#include "oxygenTransferModel.H"
+#include <cmath>
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
@@ -57,7 +59,7 @@ int main(int argc, char *argv[])
     #include "createControl.H"
     #include "createFields.H"
     #include "readBiokineticsProperties.H"
-    #include "createAsmFields.H"
+    #include "createPamFields.H"
     #include "initContinuityErrs.H"
     #include "createTimeControls.H"
     #include "correctPhi.H"
@@ -77,7 +79,7 @@ int main(int argc, char *argv[])
     );
 
     #include "fluidPhases.H"
-    #include "createOxygenTransferModel.H"
+    //#include "createOxygenTransferModel.H"
 
     turbulence->validate();
 
@@ -123,28 +125,26 @@ int main(int argc, char *argv[])
             dissipationCoeff = pos(alphaGas - 0.99)/runTime.deltaT();
 
             // --- Update scalar diffusivities
+            DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.5));
             DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.5));
             DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.5));
-            DXBH = (turbulence->nut()/ScT + DXBHValue)*(1 - pos(alphaGas - 0.5));
-            DXBA = (turbulence->nut()/ScT + DXBAValue)*(1 - pos(alphaGas - 0.5));
-            DXP  = (turbulence->nut()/ScT + DXPValue) *(1 - pos(alphaGas - 0.5));
-            DSO  = (turbulence->nut()/ScT + DSOValue) *(1 - pos(alphaGas - 0.5));
-            DSNO = (turbulence->nut()/ScT + DSNOValue)*(1 - pos(alphaGas - 0.5));
-            DSNH = (turbulence->nut()/ScT + DSNHValue)*(1 - pos(alphaGas - 0.5));
-            DSND = (turbulence->nut()/ScT + DSNDValue)*(1 - pos(alphaGas - 0.5));
-            DXND = (turbulence->nut()/ScT + DXNDValue)*(1 - pos(alphaGas - 0.5));
+            DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.5));
+            DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.5));
+            DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.5));
+            DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.5));
+            DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.5));
 
             // --- Solve ASM scalar equations
+            #include "SACEqn.H"
             #include "SSEqn.H"
             #include "XSEqn.H"
-            #include "XBHEqn.H"
-            #include "XBAEqn.H"
-            #include "XPEqn.H"
-            #include "SOEqn.H"
-            #include "SNOEqn.H"
-            #include "SNHEqn.H"
-            #include "SNDEqn.H"
-            #include "XNDEqn.H"
+            #include "XPBEqn.H"
+            #include "XIEqn.H"
+            #include "SINEqn.H"
+            #include "SIPEqn.H"
+            #include "SIEqn.H"
+
+            #include "solveRadiativeField.H"
         }
 
         runTime.write();
