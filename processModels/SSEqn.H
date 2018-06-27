@@ -6,9 +6,8 @@ fvScalarMatrix SSEqn
     + fvm::div(liquidPhase.alphaPhi(), SS)
     - fvm::laplacian(alphaLiquid*DSS, SS)
     ==
-    - alphaLiquid*rhoHeterotrophAerobicGrowth/YH
-    - alphaLiquid*rhoHeterotrophAnoxicGrowth/YH
-    + alphaLiquid*rhoOrganicHydrolysis
+    + alphaLiquid * fSSXS * rhoHydrolysis
+    - alphaLiquid * rhoPhotoheterotrophicUptake
     - fvm::Sp(dissipationCoeff, SS)
 );
 

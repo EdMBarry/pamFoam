@@ -6,7 +6,7 @@ fvScalarMatrix SIPEqn
     + fvm::div(liquidPhase.alphaPhi(), SIP)
     - fvm::laplacian(alphaLiquid*SIP, SIP)
     ==
-    alphaLiquid * fIPXS * rhoHydrolysis
+    + alphaLiquid * fSIPXS * rhoHydrolysis
     - alphaLiquid * fPB * YPBPH * rhoAcetateUptake
     - alphaLiquid * fPB * YPBPH * rhoPhotoheterotrophicUptake
     + alphaLiquid * fIPDEC * rhoDecay

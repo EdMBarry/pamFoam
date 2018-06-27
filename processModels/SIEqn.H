@@ -4,10 +4,10 @@ fvScalarMatrix SIEqn
 (
     fvm::ddt(alphaLiquid, SI)
     + fvm::div(liquidPhase.alphaPhi(), SI)
-    - fvm::laplacian(alphaLiquid*SI, SI)
+    - fvm::laplacian(alphaLiquid*DSI, SI)
     ==
     + alphaLiquid*fSIXS*rhoHydrolysis
-    - fvm::Sp(dissipationCoeff, SNH)
+    - fvm::Sp(dissipationCoeff, SI)
 );
 
 SIEqn.relax();

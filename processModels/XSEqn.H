@@ -6,7 +6,7 @@ fvScalarMatrix XSEqn
     + fvm::div(liquidPhase.alphaPhi(), XS)
     - fvm::laplacian(alphaLiquid*DXS, XS)
     ==
-      alphaLiquid*rhoDecay
+    + alphaLiquid*rhoDecay
     - alphaLiquid*rhoHydrolysis
     - fvm::Sp(dissipationCoeff, XS)
 );
