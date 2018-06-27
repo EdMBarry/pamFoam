@@ -14,13 +14,13 @@ dimensionedScalar smallConc = dimensionedScalar
                             );
 
 // Define rate limiting, competition, and inhibiting expressions
-volScalarField inhibFA = max(kFA / (SIN * kFA), smallConc); 
+volScalarField inhibFA = max(KFA / (SIN * KFA), smallConc); 
 
 volScalarField limitingSAC = max(SAC / (KSAC + SAC), smallConc);
 volScalarField limitingSS = max(SS / (KSS + SS), smallConc);
-volScalarField limitingSIN = max(SIN / (kSIN + SIN), smallConc);
-volScalarField limitingSIP = max(SIP / (kSIP + SIP), smallConc);
-volScalarField limitingG = max(GLambda_0 / (kG + GLambda_0), smallConc);
+volScalarField limitingSIN = max(SIN / (KSIN + SIN), smallConc);
+volScalarField limitingSIP = max(SIP / (KSIP + SIP), smallConc);
+volScalarField limitingG = max(GLambda_0 / (KG + GLambda_0), smallConc);
 
 volScalarField compSAC = max(SS / (SS + SAC), smallConc);
 volScalarField compSS = max(SAC / (SAC + SS), smallConc);
