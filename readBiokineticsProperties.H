@@ -14,218 +14,186 @@ IOdictionary biokineticsProperties
 
 Info << "  Reading stoichiometric parameters" << endl;
 
-Info << "    Reading autotrophic yield, YA" << endl;
+Info << "    Reading photoheterotrophic yield, YH" << endl;
 
-scalar YA
-(   
-    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("YA"))
-);
-
-Info << "    Reading heterotrophic yield, YH" << endl;
-
-scalar YH
+scalar YPBPH
 (
-    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("YH"))
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("YPBPH"))
 );
 
-Info << "    Reading fraction of biomass leading to particulate products, fP" << endl;
-
-scalar fP
+Info << "    Reading mass fraction of soluble organic substrate SS in XS" << endl;
+scalar fSSXS
 (
-    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fP"))
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSSXS"))
 );
 
-Info << "    Reading mass of nitrogen per mass of COD in biomass, iXB" << endl;
-
-scalar iXB
+Info << "    Reading mass fraction of acetate substrate SAC in XS" << endl;
+scalar fSACXS
 (
-    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("iXB"))
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSACXS"))
 );
 
-Info << "    Reading mass of nitrogen per mass of COD in products from biomass, iXP" << endl;
-
-scalar iXP
+Info << "    Reading mass fraction of inorganic nitrogen SIN in XS" << endl;
+scalar fSINXS
 (
-    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("iXP"))
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSINXS"))
 );
+
+Info << "    Reading mass fraction of inorganic phosphorus SIP in XS" << endl;
+scalar fSIPXS
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSIPXS"))
+);
+
+Info << "    Reading mass fraction of soluble inerts SI from XS" << endl;
+scalar fSIXS
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSIXS"))
+);
+
+Info << "    Reading mass fraction of inorganic nitrogen in biomass" << endl;
+scalar fNB
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fNB"))
+);
+
+Info << "    Reading mass fraction of inorganic phosphorus in biomass" << endl;
+scalar fPB
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fPB"))
+);
+
+Info << "    Reading mass fraction of inorganic nitrogen "
+     << "released at decay" << endl;
+scalar fINDEC
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fINDEC"))
+);
+
+Info << "    Reading mass fraction of inorganic phosphorus "
+     << "released at decay" << endl;
+scalar fIPDEC
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fIPDEC"))
+);
+
+//=============================================================================
 
 Info << "  Reading kinetic parameters" << endl;
 
-Info << "    Reading maximum specific growth rate for heterotrophic biomass, muH" << endl;
+Info << "    Reading maximum specific growth rate for "
+     << "photoheterotrophic biomass on soluble organics SS, (muPH)" << endl;
 
-dimensionedScalar muH
+dimensionedScalar muPH
 (
-    biokineticsProperties.subDict("kinetics").lookup("muH")
+    biokineticsProperties.subDict("kinetics").lookup("muPH")
 );
 
-Info << "    Reading half-saturation coefficient for heterotrophic biomass, KS" << endl;
-
-dimensionedScalar KS
+Info << "    Reading maximum specific growth rate for "
+     << "photoheterotrophic biomass on acetate SAC, (muAC)" << endl;
+dimensionedScalar muAC
 (
-    biokineticsProperties.subDict("kinetics").lookup("KS")
+    biokineticsProperties.subDict("kinetics").lookup("muAC")
 );
 
-Info << "    Reading oxygen half-saturation coefficient for heterotrophic biomass, KOH" << endl;
-
-dimensionedScalar KOH
+Info << "    Reading decay rate of XPB (kd)" << endl;
+dimensionedScalar kd
 (
-    biokineticsProperties.subDict("kinetics").lookup("KOH")
+    biokineticsProperties.subDict("kinetics").lookup("kd")
 );
 
-Info << "    Reading nitrate half-saturation coefficient for denitrifying heterotrophic biomass, KNO" << endl;
-
-dimensionedScalar KNO
-(
-    biokineticsProperties.subDict("kinetics").lookup("KNO")
-);
-
-Info << "    Reading decay coefficient for heterotrophic biomass, bH" << endl;
-
-dimensionedScalar bH
-(
-    biokineticsProperties.subDict("kinetics").lookup("bH")
-);
-
-Info << "    Reading maximum specific growth rate for autotrophic biomass, muA" << endl;
-
-dimensionedScalar muA
-(
-    biokineticsProperties.subDict("kinetics").lookup("muA")
-);
-
-Info << "    Reading ammonia half-saturation coefficient for autotrophic biomass, KNH" << endl;
-
-dimensionedScalar KNH
-(
-    biokineticsProperties.subDict("kinetics").lookup("KNH")
-);
-
-Info << "    Reading oxygen half-saturation coefficient for autotrophic biomass, KOA" << endl;
-
-dimensionedScalar KOA
-(
-    biokineticsProperties.subDict("kinetics").lookup("KOA")
-);
-
-Info << "    Reading decay coefficient for autotrophic biomass, bA" << endl;
-
-dimensionedScalar bA
-(
-    biokineticsProperties.subDict("kinetics").lookup("bA")
-);
-
-Info << "    Reading correction factor for muH under anoxic conditions, etag" << endl;
-
-dimensionedScalar etag
-(
-    biokineticsProperties.subDict("kinetics").lookup("etag")
-);
-
-Info << "    Reading ammonification rate, ka" << endl;
-
-dimensionedScalar ka
-(
-    biokineticsProperties.subDict("kinetics").lookup("ka")
-);
-
-Info << "    Reading maximum specific hydrolysis rate, kh" << endl;
-
+Info << "    Reading hydrolysis rate of XS (kh)" << endl;
 dimensionedScalar kh
 (
     biokineticsProperties.subDict("kinetics").lookup("kh")
 );
 
-Info << "    Reading half-saturation coefficient for hydrolysis of slowly biodegradable substrate, KX" << endl;
+Info << "    Reading half-saturation coefficient on soluble organics, KSS" << endl;
 
-dimensionedScalar KX
+dimensionedScalar KSS
 (
-    biokineticsProperties.subDict("kinetics").lookup("KX")
+    biokineticsProperties.subDict("kinetics").lookup("KSS")
 );
 
-Info << "    Reading correction factor for hydrolysis under anoxic conditions, etah" << endl;
+Info << "    Reading half-saturation coefficient on acetate, KSAC" << endl;
 
-dimensionedScalar etah
+dimensionedScalar KSAC
 (
-    biokineticsProperties.subDict("kinetics").lookup("etah")
+    biokineticsProperties.subDict("kinetics").lookup("KSAC")
 );
 
+Info << "    Reading ammonium half-saturation coefficient on nitrogen uptake, KSIN" << endl;
+
+dimensionedScalar KSIN
+(
+    biokineticsProperties.subDict("kinetics").lookup("KSIN")
+);
+
+Info << "    Reading free ammonia inhibition coefficient, KFA" << endl;
+
+dimensionedScalar KFA
+(
+    biokineticsProperties.subDict("kinetics").lookup("KFA")
+);
+
+Info << "    Reading phosphate half-saturation coefficient KSIP" << endl;
+
+dimensionedScalar KSIP
+(
+    biokineticsProperties.subDict("kinetics").lookup("KSIP")
+);
+
+
+
+Info << "    Reading half-saturation coefficient, radiative field kG" << endl;
+
+dimensionedScalar kG
+(
+    biokineticsProperties.subDict("kinetics").lookup("kG")
+);
+
+//=============================================================================
 Info << "  Reading species diffusivities" << endl;
-
-Info << "    Reading diffusivity of readily biodegradable substrate in water, DSS" << endl;
 
 dimensionedScalar DSSValue
 (
     biokineticsProperties.subDict("diffusivities").lookup("DSS")
 );
 
-Info << "    Reading diffusivity of slowly biodegradable substrate in water, DXS" << endl;
-
 dimensionedScalar DXSValue
 (
     biokineticsProperties.subDict("diffusivities").lookup("DXS")
 );
 
-Info << "    Reading diffusivity of active heterotrophic biomass in water, DXBH" << endl;
-
-dimensionedScalar DXBHValue
+dimensionedScalar DXPBValue
 (
-    biokineticsProperties.subDict("diffusivities").lookup("DXBH")
+    biokineticsProperties.subDict("diffusivities").lookup("DXPB")
 );
 
-Info << "    Reading diffusivity of active autotrophic biomass in water, DXBA" << endl;
-
-dimensionedScalar DXBAValue
+dimensionedScalar DXIValue
 (
-    biokineticsProperties.subDict("diffusivities").lookup("DXBA")
+    biokineticsProperties.subDict("diffusivities").lookup("DXI")
 );
 
-Info << "    Reading diffusivity of particulate products arising from biomass decay in water, DXP" << endl;
-
-dimensionedScalar DXPValue
+dimensionedScalar DSIValue
 (
-    biokineticsProperties.subDict("diffusivities").lookup("DXP")
+    biokineticsProperties.subDict("diffusivities").lookup("DSI")
 );
 
-Info << "    Reading diffusivity of oxygen in water, DSO" << endl;
-
-dimensionedScalar DSOValue
+dimensionedScalar DSACValue
 (
-    biokineticsProperties.subDict("diffusivities").lookup("DSO")
+    biokineticsProperties.subDict("diffusivities").lookup("DSAC")
 );
 
-Info << "    Reading diffusivity of nitrate and nitrite in water, DSNO" << endl;
-
-dimensionedScalar DSNOValue
+dimensionedScalar DSINValue
 (
-    biokineticsProperties.subDict("diffusivities").lookup("DSNO")
+    biokineticsProperties.subDict("diffusivities").lookup("DSIN")
 );
 
-Info << "    Reading diffusivity of ammonia and ammonium in water, DSNH" << endl;
 
-dimensionedScalar DSNHValue
+dimensionedScalar DSIPValue
 (
-    biokineticsProperties.subDict("diffusivities").lookup("DSNH")
-);
-
-Info << "    Reading diffusivity of soluble biodegradable organic nitrogen in water, DSND" << endl;
-
-dimensionedScalar DSNDValue
-(
-    biokineticsProperties.subDict("diffusivities").lookup("DSND")
-);
-
-Info << "    Reading diffusivity of particulate biodegradable organic nitrogen in water, DXND" << endl;
-
-dimensionedScalar DXNDValue
-(
-    biokineticsProperties.subDict("diffusivities").lookup("DXND")
-);
-
-Info << "  Reading oxygen saturation concentration, SOsat" << endl;
-
-dimensionedScalar SOsat
-(
-    biokineticsProperties.lookup("SOsat")
+    biokineticsProperties.subDict("diffusivities").lookup("DSIP")
 );
 
 Info << "  Reading turbulent Schmidt number, ScT" << endl;
