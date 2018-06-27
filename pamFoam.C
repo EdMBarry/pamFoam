@@ -33,7 +33,6 @@ Description
 
 \*---------------------------------------------------------------------------*/
 
-#include "photoBioModel.H"
 #include "fvCFD.H"
 #include "multiphaseSystem.H"
 #include "phaseModel.H"
@@ -45,6 +44,7 @@ Description
 #include "IOMRFZoneList.H"
 #include "CorrectPhi.H"
 //#include "oxygenTransferModel.H"
+#include "photoBioModel.H"
 #include <cmath>
 
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
