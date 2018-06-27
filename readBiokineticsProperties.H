@@ -145,11 +145,11 @@ dimensionedScalar KSIP
 
 
 
-Info << "    Reading half-saturation coefficient, radiative field kG" << endl;
+Info << "    Reading half-saturation coefficient, radiative field KG" << endl;
 
-dimensionedScalar kG
+dimensionedScalar KG
 (
-    biokineticsProperties.subDict("kinetics").lookup("kG")
+    biokineticsProperties.subDict("kinetics").lookup("KG")
 );
 
 //=============================================================================
