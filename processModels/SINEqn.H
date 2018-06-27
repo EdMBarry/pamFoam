@@ -6,9 +6,9 @@ fvScalarMatrix SINEqn
     + fvm::div(liquidPhase.alphaPhi(), SIN)
     - fvm::laplacian(alphaLiquid*SIN, SIN)
     ==
-    + alphaLiquid*fSINXS * rhoHydrolysis
     - alphaLiquid*fNB*YPBPH*rhoAcetateUptake
     - alphaLiquid*fNB*YPBPH*rhoPhotoheterotrophicUptake
+    + alphaLiquid*fSINXS*rhoHydrolysis
     + alphaLiquid*fINDEC*rhoDecay
     - fvm::Sp(dissipationCoeff, SIN)
 );

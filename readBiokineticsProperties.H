@@ -51,6 +51,12 @@ scalar fSIXS
     readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSIXS"))
 );
 
+Info << "    Reading mass fraction of solid inerts XI from XS" << endl;
+scalar fXIXS
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fXIXS"))
+);
+
 Info << "    Reading mass fraction of inorganic nitrogen in biomass" << endl;
 scalar fNB
 (

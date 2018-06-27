@@ -102,6 +102,8 @@ int main(int argc, char *argv[])
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
+            #include "solveRadiativeField.H"
+
             turbulence->correct();
             fluid.solve();
             rho = fluid.rho();
@@ -144,7 +146,6 @@ int main(int argc, char *argv[])
             #include "SIPEqn.H"
             #include "SIEqn.H"
 
-            #include "solveRadiativeField.H"
         }
 
         runTime.write();
