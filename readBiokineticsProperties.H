@@ -14,7 +14,7 @@ IOdictionary biokineticsProperties
 
 Info << "  Reading stoichiometric parameters" << endl;
 
-Info << "    Reading photoheterotrophic yield, YH" << endl;
+Info << "    Reading photoheterotrophic yield, YPBPH" << endl;
 
 scalar YPBPH
 (
