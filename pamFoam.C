@@ -97,34 +97,37 @@ int main(int argc, char *argv[])
         Info<< "Time = " << runTime.timeName() << nl << endl;
 
         // --- ASM rates
+        Info << "Reading pamRates" << nl << endl;
+
         #include "pamRates.H"
 
+        Info << "pamRates read. Starting pimple Loop" << nl << endl;
         // --- Pressure-velocity PIMPLE corrector loop
         while (pimple.loop())
         {
             #include "solveRadiativeField.H"
 
-            turbulence->correct();
-            fluid.solve();
+//            turbulence->correct();
+//            fluid.solve();
             rho = fluid.rho();
             #include "zonePhaseVolumes.H"
 
             //#include "TEqns.H"
-            #include "UEqns.H"
+//            #include "UEqns.H"
 
             // --- Pressure corrector loop
-            while (pimple.correct())
-            {
-                #include "pEqn.H"
-            }
+//            while (pimple.correct())
+//            {
+//                #include "pEqn.H"
+//            }
 
-            #include "DDtU.H"
+//            #include "DDtU.H"
 
             // --- Limit liquid phase velocities in gas phase
             liquidPhase.U() *= 1 - pos(alphaGas - 0.99);
 
             // --- Calculate dissipation coefficient for pure gas regions
-            dissipationCoeff = pos(alphaGas - 0.99)/runTime.deltaT();
+            dissipationCoeff = pos(alphaGas - 0.92)/runTime.deltaT();
 
             // --- Update scalar diffusivities
             DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.5));
@@ -137,15 +140,17 @@ int main(int argc, char *argv[])
             DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.5));
 
             // --- Solve ASM scalar equations
-            #include "SACEqn.H"
-            #include "SSEqn.H"
-            #include "XSEqn.H"
-            #include "XPBEqn.H"
-            #include "XIEqn.H"
-            #include "SINEqn.H"
-            #include "SIPEqn.H"
-            #include "SIEqn.H"
-
+            while (pimple.correctNonOrthogonal())
+            {
+                #include "SACEqn.H"
+                #include "SSEqn.H"
+                #include "SINEqn.H"
+                #include "SIPEqn.H"
+                #include "SIEqn.H"
+                #include "XPBEqn.H"
+                #include "XSEqn.H"
+                #include "XIEqn.H"
+            }
         }
 
         runTime.write();
