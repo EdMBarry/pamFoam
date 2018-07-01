@@ -4,7 +4,7 @@ fvScalarMatrix SIPEqn
 (
     fvm::ddt(alphaLiquid, SIP)
     + fvm::div(liquidPhase.alphaPhi(), SIP)
-    - fvm::laplacian(alphaLiquid*SIP, SIP)
+    - fvm::laplacian(alphaLiquid*DSIP, SIP)
     ==
     - fvm::Sp(dissipationCoeff, SIP)
     + alphaLiquid * fSIPXS * rhoHydrolysis

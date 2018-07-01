@@ -4,7 +4,7 @@ fvScalarMatrix SINEqn
 (
     fvm::ddt(alphaLiquid, SIN)
     + fvm::div(liquidPhase.alphaPhi(), SIN)
-    - fvm::laplacian(alphaLiquid*SIN, SIN)
+    - fvm::laplacian(alphaLiquid*DSIN, SIN)
     ==
     - alphaLiquid*fNB*YPBPH*rhoAcetateUptake
     - alphaLiquid*fNB*YPBPH*rhoPhotoheterotrophicUptake

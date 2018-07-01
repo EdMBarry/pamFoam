@@ -3,7 +3,7 @@ dimensionedScalar zeroRate = dimensionedScalar
                             (
                                 "zeroRate",
                                 dimensionSet(1,-3,-1,0,0,0,0),
-                                0
+                                VSMALL
                             );
 
 dimensionedScalar smallConc = dimensionedScalar
@@ -14,32 +14,53 @@ dimensionedScalar smallConc = dimensionedScalar
                             );
 
 // Define rate limiting, competition, and inhibiting expressions
-volScalarField inhibFA = max(KFA / (SIN * KFA), smallConc); 
+Info << "reading inhibFA" << nl << endl;
+volScalarField inhibFA = max((KFA / (SIN + KFA)), SMALL);
 
-volScalarField limitingSAC = max(SAC / (KSAC + SAC), smallConc);
-volScalarField limitingSS = max(SS / (KSS + SS), smallConc);
-volScalarField limitingSIN = max(SIN / (KSIN + SIN), smallConc);
-volScalarField limitingSIP = max(SIP / (KSIP + SIP), smallConc);
-volScalarField limitingG = max(GLambda_0 / (KG + GLambda_0), smallConc);
+Info << "reading limitingSAC" << nl << endl;
+volScalarField limitingSAC = max(SAC / (KSAC + SAC), SMALL);
 
-volScalarField compSAC = max(SS / (SS + SAC), smallConc);
-volScalarField compSS = max(SAC / (SAC + SS), smallConc);
+Info << "reading limitingSS" << nl << endl;
+volScalarField limitingSS = max(SS / (KSS + SS), SMALL);
+
+Info << "reading limitingSIN" << nl << endl;
+volScalarField limitingSIN = max(SIN / (KSIN + SIN), SMALL);
+
+Info << "reading limitingSIP" << nl << endl;
+volScalarField limitingSIP = max(SIP / (KSIP + SIP), SMALL);
+
+Info << "reading limitingG" << nl << endl;
+volScalarField limitingG = max(GLambda_0 / (KG + GLambda_0), SMALL);
+
+Info << "reading compSAC" << nl << endl;
+volScalarField compSAC = max((SS + smallConc)/ (SS + SAC + smallConc), SMALL);
+
+Info << "reading compSS" << nl << endl;
+volScalarField compSS = max((SAC + smallConc)/ (SAC + SS + smallConc), SMALL);
 
 // Define multiplier to zero reaction rates in pure gas regions
+Info << "reading mult" << nl << endl;
 volScalarField mult = 1 - pos(alphaGas - 0.5);
 
 // Define process rates
+
+Info << "reading rhoAcetateUptake" << nl << endl;
 rhoAcetateUptake = mult
                 * max
                 (
-                    muAC * XPB * inhibFA * limitingSIN * limitingSIP
-                    * limitingG * compSS * limitingSAC,
+                    muAC*XPB*inhibFA*limitingSIN*limitingSIP
+                    * limitingG*compSS*limitingSAC,
                     zeroRate
                 );
 
 
+Info << "reading rhoHetUptake" << nl << endl;
 rhoPhotoheterotrophicUptake = mult * max(muPH * XPB * inhibFA * limitingSIN
-                                * limitingSIP * limitingG * limitingSS 
+                                * limitingSIP * limitingG * limitingSS
                                 * compSAC, zeroRate);
+
+Info << "reading rhoDecay" << nl << endl;
 rhoDecay = mult * max(kd * XPB, zeroRate);
+
+Info << "reading rhoHyd" << nl << endl;
 rhoHydrolysis = mult * max(kh * XS, zeroRate);
