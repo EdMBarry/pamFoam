@@ -30,7 +30,7 @@ Info << "reading limitingSIP" << nl << endl;
 volScalarField limitingSIP = max(SIP / (KSIP + SIP), SMALL);
 
 Info << "reading limitingG" << nl << endl;
-volScalarField limitingG = max(GLambda_0 / (KG + GLambda_0), SMALL);
+volScalarField limitingG = max(photoBioDOM->G()/ (KG + photoBioDOM->G()), 0.2);
 
 Info << "reading compSAC" << nl << endl;
 volScalarField compSAC = max((SS + smallConc)/ (SS + SAC + smallConc), SMALL);

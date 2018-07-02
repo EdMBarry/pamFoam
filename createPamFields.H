@@ -1,5 +1,26 @@
 Info << "Reading scalar fields for PAM model" << endl;
 
+volScalarField I_cal
+(
+    IOobject
+    (
+        "I",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+    
+    // Initialise the photoBio model
+    
+autoPtr<photoBio::photoBioModel> photoBioModel
+(
+    photoBio::photoBioModel::New(I_cal)
+);
+
+
 Info << "  Reading field SS (Readily biodegradable substrate)" << endl;
 volScalarField SS
 (
@@ -113,7 +134,7 @@ volScalarField SI
 
 
 Info << "Creating fields for radiative transfer" << endl;
-volScalarField GLambda_0
+/*volScalarField GLambda_0
 (
     IOobject
     (
@@ -124,9 +145,9 @@ volScalarField GLambda_0
         IOobject::AUTO_WRITE
     ),
     mesh
-);
+);*/
 
-volScalarField G
+/*volScalarField G
 (
     IOobject
     (
@@ -137,27 +158,9 @@ volScalarField G
         IOobject::AUTO_WRITE
     ),
     mesh
-);
+);*/
 
-volScalarField I_cal
-(
-    IOobject
-    (
-        "I",
-        runTime.timeName(),
-        mesh,
-        IOobject::MUST_READ,
-        IOobject::AUTO_WRITE
-    ),
-    mesh
-);
-    
-    // Initialise the photoBio model
-    
-autoPtr<photoBio::photoBioModel> photoBioModel
-(
-    photoBio::photoBioModel::New(I_cal)
-);
+
 
 Info << "Creating scalar fields for process rates" << endl;
 
