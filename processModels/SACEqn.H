@@ -8,6 +8,7 @@ fvScalarMatrix SACEqn
     ==
     - alphaLiquid*rhoAcetateUptake
     + alphaLiquid*fSACXS*rhoHydrolysis
+    + alphaLiquid*(1 - YPBCH) * fSACCH * rhoChemoheterotrophicUptake
     - fvm::Sp(dissipationCoeff, SAC)
 );
 
