@@ -1,0 +1,3 @@
+update model to handle GLambda fields
+add in chemoheterotrophic and photoautotrophic growth
+add in ph solver if possible
