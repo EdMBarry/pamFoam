@@ -103,9 +103,11 @@ int main(int argc, char *argv[])
 
         Info << "pamRates read. Starting pimple Loop" << nl << endl;
         // --- Pressure-velocity PIMPLE corrector loop
+
+        #include "solveRadiativeField.H"
+
         while (pimple.loop())
         {
-            #include "solveRadiativeField.H"
 
 //            turbulence->correct();
 //            fluid.solve();
@@ -124,20 +126,20 @@ int main(int argc, char *argv[])
 //            #include "DDtU.H"
 
             // --- Limit liquid phase velocities in gas phase
-            liquidPhase.U() *= 1 - pos(alphaGas - 0.99);
+            liquidPhase.U() *= 1 - pos(alphaGas - 0.80);
 
             // --- Calculate dissipation coefficient for pure gas regions
-            dissipationCoeff = pos(alphaGas - 0.92)/runTime.deltaT();
+            //dissipationCoeff = pos(alphaGas - 0.92)/runTime.deltaT();
 
             // --- Update scalar diffusivities
-            DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.5));
-            DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.5));
-            DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.5));
-            DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.5));
-            DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.5));
-            DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.5));
-            DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.5));
-            DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.5));
+            DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
+            DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.8));
+            DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.8));
+            DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.8));
+            DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.8));
+            DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.8));
+            DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.8));
+            DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.8));
 
             // --- Solve ASM scalar equations
             while (pimple.correctNonOrthogonal())

@@ -40,7 +40,7 @@ volScalarField compSS = max((SAC + smallConc)/ (SAC + SS + smallConc), SMALL);
 
 // Define multiplier to zero reaction rates in pure gas regions
 Info << "reading mult" << nl << endl;
-volScalarField mult = 1 - pos(alphaGas - 0.5);
+volScalarField mult = 1 - pos(alphaGas - 0.9);
 
 // Define process rates
 
