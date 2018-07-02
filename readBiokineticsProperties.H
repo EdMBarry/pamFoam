@@ -90,7 +90,7 @@ scalar fSACCH
 
 scalar fSH2CH
 (
-    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fH2CH"))
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSH2CH"))
 );
 
 scalar fSICAU

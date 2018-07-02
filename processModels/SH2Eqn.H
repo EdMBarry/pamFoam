@@ -2,7 +2,7 @@
 
 fvScalarMatrix SH2Eqn
 (
-    fvm::ddt(alphaLiquid, SS)
+    fvm::ddt(alphaLiquid, SH2)
     + fvm::div(liquidPhase.alphaPhi(), SH2)
     - fvm::laplacian(alphaLiquid*DSH2, SH2)
     ==
