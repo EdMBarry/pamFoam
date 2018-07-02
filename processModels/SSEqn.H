@@ -9,6 +9,7 @@ fvScalarMatrix SSEqn
     - fvm::Sp(dissipationCoeff, SS)
     + alphaLiquid * fSSXS * rhoHydrolysis
     - alphaLiquid * rhoPhotoheterotrophicUptake
+    - alphaLiquid * rhoChemoheterotrophicUptake
 );
 
 SSEqn.relax();
