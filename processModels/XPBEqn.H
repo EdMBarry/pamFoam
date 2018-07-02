@@ -10,6 +10,8 @@ fvScalarMatrix XPBEqn
     - fvm::Sp(dissipationCoeff, XPB)
     + alphaLiquid*YPBPH*rhoAcetateUptake
     + alphaLiquid*YPBPH*rhoPhotoheterotrophicUptake
+    + alphaLiquid*YPBCH*rhoChemoheterotrophicUptake
+    + alphaLiquid*YPBAU*rhoAutotrophicUptake
 );
 
 XPBEqn.relax();

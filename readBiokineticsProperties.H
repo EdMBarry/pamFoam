@@ -196,6 +196,12 @@ dimensionedScalar KSS
     biokineticsProperties.subDict("kinetics").lookup("KSS")
 );
 
+Info << "    Reading half-sat coeff KSIC" << endl;
+dimensionedScalar KSIC
+(
+    biokineticsProperties.subDict("kinetics").lookup("KSIC")
+);
+
 Info << "    Reading half-saturation coefficient on acetate, KSAC" << endl;
 
 dimensionedScalar KSAC
@@ -251,6 +257,11 @@ dimensionedScalar DSSValue
 dimensionedScalar DSH2Value
 (
     biokineticsProperties.subDict("diffusivities").lookup("DSH2")
+);
+
+dimensionedScalar DSICValue
+(
+    biokineticsProperties.subDict("diffusivities").lookup("DSIC")
 );
 
 dimensionedScalar DXSValue

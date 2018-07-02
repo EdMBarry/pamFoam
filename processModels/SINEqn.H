@@ -8,6 +8,8 @@ fvScalarMatrix SINEqn
     ==
     - alphaLiquid*fNB*YPBPH*rhoAcetateUptake
     - alphaLiquid*fNB*YPBPH*rhoPhotoheterotrophicUptake
+    - alphaLiquid*fNB*YPBCH*rhoChemoheterotrophicUptake
+    - alphaLiquid*fNB*YPBAU*rhoAutotrophicUptake
     + alphaLiquid*fSINXS*rhoHydrolysis
     + alphaLiquid*fINDEC*rhoDecay
     - fvm::Sp(dissipationCoeff, SIN)

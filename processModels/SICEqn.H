@@ -6,11 +6,12 @@ fvScalarMatrix SICEqn
     + fvm::div(liquidPhase.alphaPhi(), SIC)
     - fvm::laplacian(alphaLiquid*SIC, SIC)
     ==
-    - alphaLiquid*fNB*YPBPH*rhoAcetateUptake
-    - alphaLiquid*fNB*YPBPH*rhoPhotoheterotrophicUptake
-    + alphaLiquid*fSINXS*rhoHydrolysis
-    + alphaLiquid*fINDEC*rhoDecay
     - fvm::Sp(dissipationCoeff, SIC)
+    + alphaLiquid*fSICAC*rhoAcetateUptake
+    + alphaLiquid*fSICSS*rhoPhotoheterotrophicUptake
+    + alphaLiquid*fSICXS*rhoHydrolysis
+    - alphaLiquid*fSICAU*rhoAutotrophicUptake
+    + alphaLiquid*fINDEC*rhoDecay
 );
 
 SICEqn.relax();

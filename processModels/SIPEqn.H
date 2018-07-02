@@ -10,6 +10,8 @@ fvScalarMatrix SIPEqn
     + alphaLiquid * fSIPXS * rhoHydrolysis
     - alphaLiquid * fPB * YPBPH * rhoAcetateUptake
     - alphaLiquid * fPB * YPBPH * rhoPhotoheterotrophicUptake
+    - alphaLiquid * fPB * YPBCH * rhoChemoheterotrophicUptake
+    - alphaLiquid * fPB * YPBAU * rhoAutotrophicUptake
     + alphaLiquid * fIPDEC * rhoDecay
 );
 

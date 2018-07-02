@@ -134,6 +134,8 @@ int main(int argc, char *argv[])
             // --- Update scalar diffusivities
             DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
             DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.8));
+            DSH2 = (turbulence->nut()/ScT + DSH2Value)*(1 - pos(alphaGas - 0.8));
+            DSIC = (turbulence->nut()/ScT + DSICValue)*(1 - pos(alphaGas - 0.8));
             DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.8));
             DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.8));
             DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.8));
@@ -146,6 +148,8 @@ int main(int argc, char *argv[])
             {
                 #include "SACEqn.H"
                 #include "SSEqn.H"
+                #include "SH2Eqn.H"
+                #include "SICEqn.H"
                 #include "SINEqn.H"
                 #include "SIPEqn.H"
                 #include "SIEqn.H"

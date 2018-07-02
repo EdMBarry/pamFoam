@@ -48,6 +48,35 @@ volScalarField SAC
     ),
     mesh
 );
+
+Info << "   Reading H2" << endl;
+volScalarField SH2
+(
+    IOobject
+    (
+        "SH2",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
+Info << "    Reading SIC" << endl;
+volScalarField SIC
+(
+    IOobject
+    (
+        "SIC",
+        runTime.timeName(),
+        mesh,
+        IOobject::MUST_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh
+);
+
 Info << "  Reading field XS (slowly biodegradable substrate)" << endl;
 volScalarField XS
 (
@@ -206,6 +235,25 @@ volScalarField rhoChemoheterotrophicUptake
     dimensionedScalar("rhoChemoheterotrophicUptake", dimMass/dimVolume/dimTime, 0)
 );
 
+volScalarField rhoAutotrophicUptake
+(
+    IOobject
+    (
+        "rhoAutotrophicUptake",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar
+    (
+        "rhoAutotrophicUptake",
+        dimensionSet(0,-3,-1,0,1,0,0),
+        scalar(0.0)
+    )
+);
+
 volScalarField rhoDecay
 (
     IOobject
@@ -263,6 +311,34 @@ volScalarField DSAC
     ),
     mesh,
     DSACValue
+);
+
+volScalarField DSH2
+(
+    IOobject
+    (
+        "DSH2",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSH2Value
+);
+
+volScalarField DSIC
+(
+    IOobject
+    (
+        "DSIC",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::NO_WRITE
+    ),
+    mesh,
+    DSICValue
 );
 
 volScalarField DXS

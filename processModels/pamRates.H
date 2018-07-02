@@ -76,9 +76,9 @@ rhoChemoheterotrophicUptake = mult * max(muCH * XPB * inhibFA * limitingSIN
 
 
 Info << "Reading rhoAutotrophicUptake" << nl << endl;
-rhoAutotrophicUptake = mult * maX(muAU * XPB * inhibFA * limitingSIN
+rhoAutotrophicUptake = mult * max(muAU * XPB * inhibFA * limitingSIN
                             * limitingSIP * limitingG * limitingSIC
-                            * limitingSH2, zeroRateAU)
+                            * limitingSH2, zeroRateAU);
 
 Info << "reading rhoDecay" << nl << endl;
 rhoDecay = mult * max(kd * XPB, zeroRate);
