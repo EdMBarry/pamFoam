@@ -13,6 +13,13 @@ dimensionedScalar smallConc = dimensionedScalar
                                 SMALL
                             );
 
+dimensionedScalar zeroRateAU = dimensionedScalar
+                            (
+                                "zeroRateAU",
+                                dimensionSet(0,-3,-1,0,1,0,0),
+                                VSMALL
+                            );
+
 // Define rate limiting, competition, and inhibiting expressions
 Info << "reading inhibFA" << nl << endl;
 volScalarField inhibFA = max((KFA / (SIN + KFA)), SMALL);
@@ -22,6 +29,10 @@ volScalarField limitingSAC = max(SAC / (KSAC + SAC), SMALL);
 
 Info << "reading limitingSS" << nl << endl;
 volScalarField limitingSS = max(SS / (KSS + SS), SMALL);
+
+volScalarField limitingSIC = max(SIC / (KSIC + SIC), SMALL);
+
+volScalarField limitingSH2 = max(SH2 / (KSH2 + SH2), SMALL);
 
 Info << "reading limitingSIN" << nl << endl;
 volScalarField limitingSIN = max(SIN / (KSIN + SIN), SMALL);
@@ -63,6 +74,11 @@ Info << "Reading rhoChemoheterotrophicUptake" << nl << endl;
 rhoChemoheterotrophicUptake = mult * max(muCH * XPB * inhibFA * limitingSIN
                                 * limitingSIP * limitingSS, zeroRate);
 
+
+Info << "Reading rhoAutotrophicUptake" << nl << endl;
+rhoAutotrophicUptake = mult * maX(muAU * XPB * inhibFA * limitingSIN
+                            * limitingSIP * limitingG * limitingSIC
+                            * limitingSH2, zeroRateAU)
 
 Info << "reading rhoDecay" << nl << endl;
 rhoDecay = mult * max(kd * XPB, zeroRate);

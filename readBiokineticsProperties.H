@@ -21,6 +21,19 @@ scalar YPBPH
     readScalar(biokineticsProperties.subDict("stoichiometry").lookup("YPBPH"))
 );
 
+Info << "    Reading chemo yield, YPBCH" << endl;
+scalar YPBCH
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("YPBCH"))
+);
+
+Info << "    Reading auto yield, YPBAU" << endl;
+dimensionedScalar YPBAU
+(
+    biokineticsProperties.subDict("stoichiometry").lookup("YPBAU")
+);
+
+
 Info << "    Reading mass fraction of soluble organic substrate SS in XS" << endl;
 scalar fSSXS
 (
@@ -31,6 +44,18 @@ Info << "    Reading mass fraction of acetate substrate SAC in XS" << endl;
 scalar fSACXS
 (
     readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSACXS"))
+);
+
+Info << "    Reading mass frac H2 in XS" << endl;
+scalar fSH2XS
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSH2XS"))
+);
+
+Info << "Reading SIC in XS" << endl;
+dimensionedScalar fSICXS
+(
+    biokineticsProperties.subDict("stoichiometry").lookup("fSICXS")
 );
 
 Info << "    Reading mass fraction of inorganic nitrogen SIN in XS" << endl;
@@ -55,6 +80,37 @@ Info << "    Reading mass fraction of solid inerts XI from XS" << endl;
 scalar fXIXS
 (
     readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fXIXS"))
+);
+
+Info << "    Reading chemoheterotrophic stoich parameters" << endl;
+scalar fSACCH
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSACCH"))
+);
+
+scalar fSH2CH
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fH2CH"))
+);
+
+scalar fSICAU
+(
+    readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fSICAU"))
+);
+
+dimensionedScalar fSH2AU
+(
+    biokineticsProperties.subDict("stoichiometry").lookup("fSH2AU")
+);
+
+dimensionedScalar fSICSS
+(
+    biokineticsProperties.subDict("stoichiometry").lookup("fSICSS")
+);
+
+dimensionedScalar fSICAC
+(
+    biokineticsProperties.subDict("stoichiometry").lookup("fSICAC")
 );
 
 Info << "    Reading mass fraction of inorganic nitrogen in biomass" << endl;
@@ -83,6 +139,11 @@ scalar fIPDEC
     readScalar(biokineticsProperties.subDict("stoichiometry").lookup("fIPDEC"))
 );
 
+dimensionedScalar fICDEC
+(
+    biokineticsProperties.subDict("stoichiometry").lookup("fICDEC")
+);
+
 //=============================================================================
 
 Info << "  Reading kinetic parameters" << endl;
@@ -107,6 +168,13 @@ Info << "    Reading maximum specific growth rate for "
 dimensionedScalar muCH
 (
     biokineticsProperties.subDict("kinetics").lookup("muCH")
+);
+
+Info << "    Reading maximum specific growth rate for "
+     << "auto uptake (muAU)" << endl;
+dimensionedScalar muAU
+(
+    biokineticsProperties.subDict("kinetics").lookup("muAU")
 );
 
 Info << "    Reading decay rate of XPB (kd)" << endl;
@@ -142,6 +210,13 @@ dimensionedScalar KSIN
     biokineticsProperties.subDict("kinetics").lookup("KSIN")
 );
 
+Info << "    Reading KSH2" << endl;
+dimensionedScalar KSH2
+(
+    biokineticsProperties.subDict("kinetics").lookup("KSH2")
+);
+
+
 Info << "    Reading free ammonia inhibition coefficient, KFA" << endl;
 
 dimensionedScalar KFA
@@ -171,6 +246,11 @@ Info << "  Reading species diffusivities" << endl;
 dimensionedScalar DSSValue
 (
     biokineticsProperties.subDict("diffusivities").lookup("DSS")
+);
+
+dimensionedScalar DSH2Value
+(
+    biokineticsProperties.subDict("diffusivities").lookup("DSH2")
 );
 
 dimensionedScalar DXSValue
