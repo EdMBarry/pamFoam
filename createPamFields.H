@@ -134,7 +134,7 @@ volScalarField SI
 
 
 Info << "Creating fields for radiative transfer" << endl;
-/*volScalarField GLambda_0
+volScalarField GLambda_0
 (
     IOobject
     (
@@ -145,9 +145,9 @@ Info << "Creating fields for radiative transfer" << endl;
         IOobject::AUTO_WRITE
     ),
     mesh
-);*/
+);
 
-/*volScalarField G
+volScalarField G
 (
     IOobject
     (
@@ -158,7 +158,7 @@ Info << "Creating fields for radiative transfer" << endl;
         IOobject::AUTO_WRITE
     ),
     mesh
-);*/
+);
 
 
 
@@ -190,6 +190,20 @@ volScalarField rhoPhotoheterotrophicUptake
     ),
     mesh,
     dimensionedScalar("rhoPhotoheterotrophicUptake", dimMass/dimVolume/dimTime, 0)
+);
+
+volScalarField rhoChemoheterotrophicUptake
+(
+    IOobject
+    (
+        "rhoChemoheterotrophicUptake",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("rhoChemoheterotrophicUptake", dimMass/dimVolume/dimTime, 0)
 );
 
 volScalarField rhoDecay
@@ -351,5 +365,4 @@ volScalarField dissipationCoeff
     mesh,
     dimensionedScalar("dissipationCoeff", dimless/dimTime, 0)
 );
-
 Info << endl;

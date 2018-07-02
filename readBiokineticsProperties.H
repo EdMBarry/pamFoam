@@ -102,6 +102,13 @@ dimensionedScalar muAC
     biokineticsProperties.subDict("kinetics").lookup("muAC")
 );
 
+Info << "    Reading maximum specific growth rate for "
+     << "chemoheterotrophic uptake (muCH)" << endl;
+dimensionedScalar muCH
+(
+    biokineticsProperties.subDict("kinetics").lookup("muCH")
+);
+
 Info << "    Reading decay rate of XPB (kd)" << endl;
 dimensionedScalar kd
 (

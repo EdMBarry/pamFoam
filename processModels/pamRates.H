@@ -30,7 +30,7 @@ Info << "reading limitingSIP" << nl << endl;
 volScalarField limitingSIP = max(SIP / (KSIP + SIP), SMALL);
 
 Info << "reading limitingG" << nl << endl;
-volScalarField limitingG = max(photoBioDOM->G()/ (KG + photoBioDOM->G()), 0.2);
+volScalarField limitingG = max(G/ (KG + G), 0.2); // needs to change to G object of photobiomodel
 
 Info << "reading compSAC" << nl << endl;
 volScalarField compSAC = max((SS + smallConc)/ (SS + SAC + smallConc), SMALL);
@@ -58,6 +58,11 @@ Info << "reading rhoHetUptake" << nl << endl;
 rhoPhotoheterotrophicUptake = mult * max(muPH * XPB * inhibFA * limitingSIN
                                 * limitingSIP * limitingG * limitingSS
                                 * compSAC, zeroRate);
+
+Info << "Reading rhoChemoheterotrophicUptake" << nl << endl;
+rhoChemoheterotrophicUptake = mult * max(muCH * XPB * inhibFA * limitingSIN
+                                * limitingSIP * limitingSS, zeroRate);
+
 
 Info << "reading rhoDecay" << nl << endl;
 rhoDecay = mult * max(kd * XPB, zeroRate);
