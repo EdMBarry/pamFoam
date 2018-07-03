@@ -6,8 +6,8 @@ fvScalarMatrix XPBEqn
     + fvm::div(liquidPhase.alphaPhi(), XPB)
     - fvm::laplacian(alphaLiquid*DXPB, XPB)
     ==
-    - alphaLiquid*rhoDecay
     - fvm::Sp(dissipationCoeff, XPB)
+    - alphaLiquid*rhoDecay
     + alphaLiquid*YPBPH*rhoAcetateUptake
     + alphaLiquid*YPBPH*rhoPhotoheterotrophicUptake
     + alphaLiquid*YPBCH*rhoChemoheterotrophicUptake

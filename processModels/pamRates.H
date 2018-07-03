@@ -41,7 +41,7 @@ Info << "reading limitingSIP" << nl << endl;
 limitingSIP = max(SIP / (KSIP + SIP), SMALL);
 
 Info << "reading limitingG" << nl << endl;
-limitingG = max(GLambda_0/ (KG + GLambda_0), SMALL); // needs to change to G object of photobiomodel
+limitingG = max(G/ (KG + G), SMALL); // needs to change to G object of photobiomodel
 
 Info << "reading compSAC" << nl << endl;
 volScalarField compSAC = max((SS + smallConc)/ (SS + SAC + smallConc), SMALL);
