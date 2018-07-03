@@ -110,19 +110,19 @@ int main(int argc, char *argv[])
         {
 
             turbulence->correct();
-//            fluid.solve();
-//            rho = fluid.rho();
+            fluid.solve();
+            rho = fluid.rho();
             #include "zonePhaseVolumes.H"
 
-            //#include "TEqns.H"
-//            #include "UEqns.H"
+//            #include "TEqns.H"
+            #include "UEqns.H"
 
             // --- Pressure corrector loop
-/*            while (pimple.correct())
+            while (pimple.correct())
             {
                 #include "pEqn.H"
             }
-*/
+
             #include "DDtU.H"
 
             // --- Limit liquid phase velocities in gas phase
