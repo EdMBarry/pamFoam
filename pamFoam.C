@@ -109,27 +109,27 @@ int main(int argc, char *argv[])
         while (pimple.loop())
         {
 
-//            turbulence->correct();
+            turbulence->correct();
 //            fluid.solve();
-            rho = fluid.rho();
+//            rho = fluid.rho();
             #include "zonePhaseVolumes.H"
 
             //#include "TEqns.H"
 //            #include "UEqns.H"
 
             // --- Pressure corrector loop
-//            while (pimple.correct())
-//            {
-//                #include "pEqn.H"
-//            }
-
-//            #include "DDtU.H"
+/*            while (pimple.correct())
+            {
+                #include "pEqn.H"
+            }
+*/
+            #include "DDtU.H"
 
             // --- Limit liquid phase velocities in gas phase
             liquidPhase.U() *= 1 - pos(alphaGas - 0.80);
 
             // --- Calculate dissipation coefficient for pure gas regions
-            //dissipationCoeff = pos(alphaGas - 0.92)/runTime.deltaT();
+//            dissipationCoeff = pos(alphaGas - 0.90)/runTime.deltaT();
 
             // --- Update scalar diffusivities
             DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
