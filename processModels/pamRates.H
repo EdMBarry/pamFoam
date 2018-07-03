@@ -20,6 +20,7 @@ dimensionedScalar zeroRateAU = dimensionedScalar
                                 VSMALL
                             );
 
+G850 = photoBioModel->G();
 // Define rate limiting, competition, and inhibiting expressions
 Info << "reading inhibFA" << nl << endl;
 inhibFA = max((KFA / (SIN + KFA)), SMALL);
@@ -41,7 +42,7 @@ Info << "reading limitingSIP" << nl << endl;
 limitingSIP = max(SIP / (KSIP + SIP), SMALL);
 
 Info << "reading limitingG" << nl << endl;
-limitingG = max(G/ (KG + G), SMALL); // needs to change to G object of photobiomodel
+limitingG = max(G850/ (KG + G850), SMALL);
 
 Info << "reading compSAC" << nl << endl;
 volScalarField compSAC = max((SS + smallConc)/ (SS + SAC + smallConc), SMALL);
