@@ -12,9 +12,9 @@ volScalarField I_cal
     ),
     mesh
 );
-    
+
     // Initialise the photoBio model
-    
+
 autoPtr<photoBio::photoBioModel> photoBioModel
 (
     photoBio::photoBioModel::New(I_cal)
@@ -161,32 +161,18 @@ volScalarField SI
     mesh
 );
 
-
-Info << "Creating fields for radiative transfer" << endl;
-volScalarField GLambda_0
+volScalarField G850
 (
     IOobject
     (
-        "GLambda_0",
+        "G850",
         runTime.timeName(),
         mesh,
-        IOobject::MUST_READ,
+        IOobject::READ_IF_PRESENT,
         IOobject::AUTO_WRITE
     ),
-    mesh
-);
-
-volScalarField G
-(
-    IOobject
-    (
-        "G",
-        runTime.timeName(),
-        mesh,
-        IOobject::MUST_READ,
-        IOobject::AUTO_WRITE
-    ),
-    mesh
+    mesh,
+    dimensionedScalar("G850", dimensionSet(1,0,-3,0,0,0,0),0)
 );
 
 
