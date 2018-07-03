@@ -22,26 +22,26 @@ dimensionedScalar zeroRateAU = dimensionedScalar
 
 // Define rate limiting, competition, and inhibiting expressions
 Info << "reading inhibFA" << nl << endl;
-volScalarField inhibFA = max((KFA / (SIN + KFA)), SMALL);
+inhibFA = max((KFA / (SIN + KFA)), SMALL);
 
 Info << "reading limitingSAC" << nl << endl;
-volScalarField limitingSAC = max(SAC / (KSAC + SAC), SMALL);
+limitingSAC = max(SAC / (KSAC + SAC), SMALL);
 
 Info << "reading limitingSS" << nl << endl;
-volScalarField limitingSS = max(SS / (KSS + SS), SMALL);
+limitingSS = max(SS / (KSS + SS), SMALL);
 
-volScalarField limitingSIC = max(SIC / (KSIC + SIC), SMALL);
+limitingSIC = max(SIC / (KSIC + SIC), SMALL);
 
-volScalarField limitingSH2 = max(SH2 / (KSH2 + SH2), SMALL);
+limitingSH2 = max(SH2 / (KSH2 + SH2), SMALL);
 
 Info << "reading limitingSIN" << nl << endl;
-volScalarField limitingSIN = max(SIN / (KSIN + SIN), SMALL);
+limitingSIN = max(SIN / (KSIN + SIN), SMALL);
 
 Info << "reading limitingSIP" << nl << endl;
-volScalarField limitingSIP = max(SIP / (KSIP + SIP), SMALL);
+limitingSIP = max(SIP / (KSIP + SIP), SMALL);
 
 Info << "reading limitingG" << nl << endl;
-volScalarField limitingG = max(GLambda_0/ (KG + GLambda_0), 30 / 38.76); // needs to change to G object of photobiomodel
+limitingG = max(GLambda_0/ (KG + GLambda_0), SMALL); // needs to change to G object of photobiomodel
 
 Info << "reading compSAC" << nl << endl;
 volScalarField compSAC = max((SS + smallConc)/ (SS + SAC + smallConc), SMALL);
@@ -57,11 +57,9 @@ volScalarField mult = 1 - pos(alphaGas - 0.9);
 
 Info << "reading rhoAcetateUptake" << nl << endl;
 rhoAcetateUptake = mult
-                * max
-                (
-                    muAC*XPB*inhibFA*limitingSIN*limitingSIP
-                    * limitingG*compSS*limitingSAC,
-                    zeroRate
+                * max(muAC*XPB*inhibFA*limitingSIN*limitingSIP
+                * limitingG*compSS*limitingSAC,
+                zeroRate
                 );
 
 

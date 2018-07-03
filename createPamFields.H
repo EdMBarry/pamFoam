@@ -441,4 +441,129 @@ volScalarField dissipationCoeff
     mesh,
     dimensionedScalar("dissipationCoeff", dimless/dimTime, 0)
 );
+
+//======================================================================
+// Temporary: Write out limitation fields
+
+volScalarField inhibFA
+(
+    IOobject
+    (
+        "inhibFA",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("inhibFA", dimless, 0)
+);
+
+volScalarField limitingSAC
+(
+    IOobject
+    (
+        "limitingSAC",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingSAC", dimless, 0)
+);
+
+volScalarField limitingSS
+(
+    IOobject
+    (
+        "limitingSS",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingSS", dimless, 0)
+
+);
+
+volScalarField limitingSIC
+(
+    IOobject
+    (
+        "limitingSIC",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingSIC", dimless, 0)
+);
+
+volScalarField limitingSH2
+(
+    IOobject
+    (
+        "limitingSH2",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingSH2", dimless, 0)
+);
+
+volScalarField limitingSIN
+(
+    IOobject
+    (
+        "limitingSIN",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingSIN", dimless, 0)
+);
+
+volScalarField limitingSIP
+(
+    IOobject
+    (
+        "limitingSIP",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingSIP", dimless, 0)
+);
+
+
+volScalarField limitingG
+(
+    IOobject
+    (
+        "limitingG",
+        runTime.timeName(),
+        mesh,
+        IOobject::NO_READ,
+        IOobject::AUTO_WRITE
+    ),
+    mesh,
+    dimensionedScalar("limitingG", dimless, 0)
+);
+
+
+
+
+
+
+
+
 Info << endl;
