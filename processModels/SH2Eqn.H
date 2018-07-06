@@ -14,3 +14,4 @@ fvScalarMatrix SH2Eqn
 
 SH2Eqn.relax();
 SH2Eqn.solve();
+SH2 *= pos(SH2);
