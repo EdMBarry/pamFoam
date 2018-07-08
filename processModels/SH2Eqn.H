@@ -8,7 +8,7 @@ fvScalarMatrix SH2Eqn
     ==
     - fvm::Sp(dissipationCoeff, SH2)
     + alphaLiquid * fSH2XS * rhoHydrolysis
-    + (1 - YPBCH) * fSH2CH * rhoChemoheterotrophicUptake
+    + alphaLiquid * (1 - YPBCH) * fSH2CH * rhoChemoheterotrophicUptake
     - alphaLiquid * fSH2AU * rhoAutotrophicUptake
 );
 
