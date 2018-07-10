@@ -1,0 +1,6 @@
+oxygenTransferModel/oxygenTransferModel.C
+oxygenTransferModel/newOxygenTransferModel.C
+constant/constant.C
+dynamic/dynamic.C
+
+LIB = $(FOAM_USER_LIBBIN)/liboxygenTransferModels
