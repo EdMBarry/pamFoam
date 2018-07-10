@@ -105,7 +105,6 @@ int main(int argc, char *argv[])
         // --- Pressure-velocity PIMPLE corrector loop
 
         #include "solveRadiativeField.H"
-
         while (pimple.loop())
         {
 
