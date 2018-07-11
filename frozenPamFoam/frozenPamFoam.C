@@ -43,7 +43,6 @@ Description
 #include "pimpleControl.H"
 #include "IOMRFZoneList.H"
 #include "CorrectPhi.H"
-//#include "oxygenTransferModel.H"
 #include "photoBioModel.H"
 #include <cmath>
 
@@ -65,13 +64,8 @@ int main(int argc, char *argv[])
     #include "correctPhi.H"
     #include "CourantNo.H"
     #include "setInitialDeltaT.H"
+    #include "solveSelector.H"
 
-    bool solvePam = false;
-    
-    if (biokineticsProperties.found("solvePam"))
-    {
-        solvePam = Switch(biokineticsProperties.lookup("solvePam"));
-    }
 
     scalar slamDampCoeff
     (
@@ -86,7 +80,6 @@ int main(int argc, char *argv[])
     );
 
     #include "fluidPhases.H"
-    //#include "createOxygenTransferModel.H"
 
     turbulence->validate();
 
@@ -103,16 +96,16 @@ int main(int argc, char *argv[])
         runTime++;
         Info<< "Time = " << runTime.timeName() << nl << endl;
 
-        // --- ASM rates
+        // --- PAM rates
         Info << "Reading pamRates" << nl << endl;
-
         #include "pamRates.H"
 
         Info << "pamRates read. Starting pimple Loop" << nl << endl;
         // --- Pressure-velocity PIMPLE corrector loop
-
-        #include "solveRadiativeField.H"
-
+        if (solveRad)
+        {
+            #include "solveRadiativeField.H"
+        }
         
         while (pimple.loop())
         {
@@ -128,7 +121,6 @@ int main(int argc, char *argv[])
             DSIN = DSINValue;
             DSIP = DSIPValue;
             DSI = DSIValue;
-
             
             if (solveFlow)
             {
