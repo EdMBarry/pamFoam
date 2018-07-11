@@ -117,66 +117,69 @@ int main(int argc, char *argv[])
         while (pimple.loop())
         {
 
-//            turbulence->correct();
-//            fluid.solve();
-//            rho = fluid.rho();
-//            #include "zonePhaseVolumes.H"
+            // --- Update scalar diffusivities
+            DSS = DSSValue;
+            DSH2 = DSH2Value;
+            DSIC = DSICValue;
+            DSAC = DSACValue;
+            DXS = DXSValue;
+            DXPB = DXPBValue;
+            DXI = DXIValue;
+            DSIN = DSINValue;
+            DSIP = DSIPValue;
+            DSI = DSIValue;
 
-//            #include "TEqns.H"
-//            #include "UEqns.H"
+            
+            if (solveFlow)
+            {
+                turbulence->correct();
+                fluid.solve();
+                rho = fluid.rho();
+                #include "zonePhaseVolumes.H"
+                #include "UEqns.H"
+                
+                DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
+                DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.8));
+                DSH2 = (turbulence->nut()/ScT + DSH2Value)*(1 - pos(alphaGas - 0.8));
+                DSIC = (turbulence->nut()/ScT + DSICValue)*(1 - pos(alphaGas - 0.8));
+                DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.8));
+                DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.8));
+                DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.8));
+                DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.8));
+                DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.8));
+                DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.8));
 
             // --- Pressure corrector loop
-//            while (pimple.correct())
-//            {
-//                #include "pEqn.H"
-//            }
+                while (pimple.correct())
+                {
+                    #include "pEqn.H"
+                }
 
-  //          #include "DDtU.H"
-
+               #include "DDtU.H"
+            }
             // --- Limit liquid phase velocities in gas phase
             liquidPhase.U() *= 1 - pos(alphaGas - 0.80);
 
             // --- Calculate dissipation coefficient for pure gas regions
             dissipationCoeff = pos(alphaGas - 0.90)/runTime.deltaT();
 
-            // --- Update scalar diffusivities
-/*            DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
-            DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.8));
-            DSH2 = (turbulence->nut()/ScT + DSH2Value)*(1 - pos(alphaGas - 0.8));
-            DSIC = (turbulence->nut()/ScT + DSICValue)*(1 - pos(alphaGas - 0.8));
-            DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.8));
-            DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.8));
-            DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.8));
-            DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.8));
-            DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.8));
-            DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.8));
-*/
-            DSS = DSSValue;
-            DSH2 = DSH2Value;
-            DSIC = DSICValue;
-            DSAC = DSACValue;
-            DXS = DXSValue;
-            DXPB=DXPBValue;
-            DXI=DXIValue;
-            DSIN=DSINValue;
-            DSIP=DSIPValue;
-            DSI=DSIValue;
-
+            
             // --- Solve ASM scalar equations
-            if (solvePam) {
-            while (pimple.correctNonOrthogonal())
+            if (solvePam)
             {
-                #include "SACEqn.H"
-                #include "SSEqn.H"
-                #include "SH2Eqn.H"
-                #include "SICEqn.H"
-                #include "SINEqn.H"
-                #include "SIPEqn.H"
-                #include "SIEqn.H"
-                #include "XPBEqn.H"
-                #include "XSEqn.H"
-                #include "XIEqn.H"
-            }
+                while (pimple.correctNonOrthogonal())
+                {
+                    #include "SACEqn.H"
+                    #include "SSEqn.H"
+                    #include "SH2Eqn.H"
+                    #include "SICEqn.H"
+                    #include "SINEqn.H"
+                    #include "SIPEqn.H"
+                    #include "SIEqn.H"
+                    #include "XPBEqn.H"
+                    #include "XSEqn.H"
+                    #include "XIEqn.H"
+                }
             }
         }
 
