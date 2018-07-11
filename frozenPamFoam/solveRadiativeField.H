@@ -1,6 +1,6 @@
 double radInterval
 (
-    runTime.controlDict().lookupOrDefault("m", 900.0)
+    runTime.controlDict().lookupOrDefault("radSolveInterval", 900.0)
 );
 
 double tol
