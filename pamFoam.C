@@ -113,7 +113,6 @@ int main(int argc, char *argv[])
             rho = fluid.rho();
             #include "zonePhaseVolumes.H"
 
-//            #include "TEqns.H"
             #include "UEqns.H"
 
             // --- Pressure corrector loop
@@ -128,7 +127,7 @@ int main(int argc, char *argv[])
             liquidPhase.U() *= 1 - pos(alphaGas - 0.80);
 
             // --- Calculate dissipation coefficient for pure gas regions
-//            dissipationCoeff = pos(alphaGas - 0.90)/runTime.deltaT();
+            dissipationCoeff = pos(alphaGas - 0.90)/runTime.deltaT();
 
             // --- Update scalar diffusivities
             DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
