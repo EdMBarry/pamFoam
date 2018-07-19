@@ -43,6 +43,7 @@ Description
 #include "pimpleControl.H"
 #include "IOMRFZoneList.H"
 #include "CorrectPhi.H"
+//#include "oxygenTransferModel.H"
 #include "photoBioModel.H"
 #include <cmath>
 
@@ -64,8 +65,13 @@ int main(int argc, char *argv[])
     #include "correctPhi.H"
     #include "CourantNo.H"
     #include "setInitialDeltaT.H"
-    #include "solveSelector.H"
 
+    bool solvePam = false;
+
+    if (biokineticsProperties.found("solvePam"))
+    {
+        solvePam = Switch(biokineticsProperties.lookup("solvePam"));
+    }
 
     scalar slamDampCoeff
     (
@@ -80,6 +86,7 @@ int main(int argc, char *argv[])
     );
 
     #include "fluidPhases.H"
+    //#include "createOxygenTransferModel.H"
 
     turbulence->validate();
 
@@ -96,82 +103,80 @@ int main(int argc, char *argv[])
         runTime++;
         Info<< "Time = " << runTime.timeName() << nl << endl;
 
-        // --- PAM rates
+        // --- ASM rates
         Info << "Reading pamRates" << nl << endl;
+
         #include "pamRates.H"
 
         Info << "pamRates read. Starting pimple Loop" << nl << endl;
         // --- Pressure-velocity PIMPLE corrector loop
-        if (solveRad)
-        {
-            #include "solveRadiativeField.H"
-        }
-        
+
+        #include "solveRadiativeField.H"
+
+
         while (pimple.loop())
         {
 
+//            turbulence->correct();
+//            fluid.solve();
+//            rho = fluid.rho();
+//            #include "zonePhaseVolumes.H"
+
+//            #include "TEqns.H"
+//            #include "UEqns.H"
+
+            // --- Pressure corrector loop
+//            while (pimple.correct())
+//            {
+//                #include "pEqn.H"
+//            }
+
+  //          #include "DDtU.H"
+
+            // --- Limit liquid phase velocities in gas phase
+  //          liquidPhase.U() *= 1 - pos(alphaGas - 0.80);
+
+            // --- Calculate dissipation coefficient for pure gas regions
+   //         dissipationCoeff = pos(alphaGas - 0.90)/runTime.deltaT();
+
             // --- Update scalar diffusivities
+/*            DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
+            DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.8));
+            DSH2 = (turbulence->nut()/ScT + DSH2Value)*(1 - pos(alphaGas - 0.8));
+            DSIC = (turbulence->nut()/ScT + DSICValue)*(1 - pos(alphaGas - 0.8));
+            DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.8));
+            DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.8));
+            DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.8));
+            DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.8));
+            DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.8));
+            DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.8));
+*/
             DSS = DSSValue;
             DSH2 = DSH2Value;
             DSIC = DSICValue;
             DSAC = DSACValue;
             DXS = DXSValue;
-            DXPB = DXPBValue;
-            DXI = DXIValue;
-            DSIN = DSINValue;
-            DSIP = DSIPValue;
-            DSI = DSIValue;
-            
-            if (solveFlow)
-            {
-                turbulence->correct();
-                fluid.solve();
-                rho = fluid.rho();
-                #include "zonePhaseVolumes.H"
-                #include "UEqns.H"
-                
-                DSAC = (turbulence->nut()/ScT + DSACValue)*(1 - pos(alphaGas - 0.8));
-                DSS  = (turbulence->nut()/ScT + DSSValue) *(1 - pos(alphaGas - 0.8));
-                DSH2 = (turbulence->nut()/ScT + DSH2Value)*(1 - pos(alphaGas - 0.8));
-                DSIC = (turbulence->nut()/ScT + DSICValue)*(1 - pos(alphaGas - 0.8));
-                DXS  = (turbulence->nut()/ScT + DXSValue) *(1 - pos(alphaGas - 0.8));
-                DXPB = (turbulence->nut()/ScT + DXPBValue)*(1 - pos(alphaGas - 0.8));
-                DXI = (turbulence->nut()/ScT + DXIValue)*(1 - pos(alphaGas - 0.8));
-                DSIN  = (turbulence->nut()/ScT + DSINValue) *(1 - pos(alphaGas - 0.8));
-                DSIP = (turbulence->nut()/ScT + DSIPValue)*(1 - pos(alphaGas - 0.8));
-                DSI  = (turbulence->nut()/ScT + DSIValue) *(1 - pos(alphaGas - 0.8));
+            DXPB=DXPBValue;
+            DXI=DXIValue;
+            DSIN=DSINValue;
+            DSIP=DSIPValue;
+            DSI=DSIValue;
 
-            // --- Pressure corrector loop
-                while (pimple.correct())
-                {
-                    #include "pEqn.H"
-                }
-
-               #include "DDtU.H"
-            }
-            // --- Limit liquid phase velocities in gas phase
-            liquidPhase.U() *= 1 - pos(alphaGas - 0.80);
-
-            // --- Calculate dissipation coefficient for pure gas regions
-            dissipationCoeff = pos(alphaGas - 0.90)/runTime.deltaT();
-
-            
             // --- Solve ASM scalar equations
-            if (solvePam)
+            if (solvePam) {
+            while (pimple.correctNonOrthogonal())
             {
-                while (pimple.correctNonOrthogonal())
-                {
-                    #include "SACEqn.H"
-                    #include "SSEqn.H"
-                    #include "SH2Eqn.H"
-                    #include "SICEqn.H"
-                    #include "SINEqn.H"
-                    #include "SIPEqn.H"
-                    #include "SIEqn.H"
-                    #include "XPBEqn.H"
-                    #include "XSEqn.H"
-                    #include "XIEqn.H"
-                }
+                #include "SACEqn.H"
+                #include "SSEqn.H"
+                #include "SH2Eqn.H"
+                #include "SICEqn.H"
+                #include "SINEqn.H"
+                #include "SIPEqn.H"
+                #include "SIEqn.H"
+                #include "XPBEqn.H"
+                #include "XSEqn.H"
+                #include "XIEqn.H"
+            }
             }
         }
 
